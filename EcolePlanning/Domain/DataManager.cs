@@ -275,7 +275,7 @@ namespace EcolePlanning.Domain
 
                 BrushConverter brushConverter = new BrushConverter();
 #region Classes
-                Classe psms = new Classe()
+                Classe cl1 = new Classe()
                 {
                     Id = 1,
                     Libelle = "PS/MS",
@@ -283,65 +283,74 @@ namespace EcolePlanning.Domain
                     PrenomProfesseur = "Axelle & Chantal",
                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ffe680")
                 };
-                Classe msgs = new Classe()
+                Classe cl2 = new Classe()
                 {
                     Id = 2,
                     Libelle = "MS/GS",
                     NomProfesseur = " ",
-                    PrenomProfesseur = "Virginie",
+                    PrenomProfesseur = "Cassandra",
                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ff8080")
                 };
-                Classe cpce1 = new Classe()
+                Classe cl3 = new Classe()
                 {
                     Id = 3,
-                    Libelle = "CP",
+                    Libelle = "GS/CP",
                     NomProfesseur = " ",
-                    PrenomProfesseur = "Caroline",
+                    PrenomProfesseur = "Virginie",
                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ff80b3")
                 };
-                Classe ce1ce2 = new Classe()
+                Classe cl4 = new Classe()
                 {
                     Id = 4,
+                    Libelle = "CP/CE1",
+                    NomProfesseur = " ",
+                    PrenomProfesseur = "Caroline",                    
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ED3B5D")
+                };
+                Classe cl5 = new Classe()
+                {
+                    Id = 5,
                     Libelle = "CE1/CE2",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Nathalie",
                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#8080ff")
                 };
-                Classe ce2 = new Classe()
+                Classe cl6 = new Classe()
                 {
-                    Id = 5,
+                    Id = 6,
                     Libelle = "CE2/CM1",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Laurence & Chantal",
                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80dfff")
                 };
-                Classe cm1 = new Classe()
-                {
-                    Id = 6,
-                    Libelle = "CM1",
-                    NomProfesseur = " ",
-                    PrenomProfesseur = "Cassandra",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80ffbf")
-                };
-                Classe cm2 = new Classe()
+                Classe cl7 = new Classe()
                 {
                     Id = 7,
+                    Libelle = "CM2",
+                    NomProfesseur = " ",
+                    PrenomProfesseur = "Florent",
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80ffbf")
+                };
+                Classe cl8 = new Classe()
+                {
+                    Id = 8,
                     Libelle = "CM2",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Sophie",
                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#d5ff80")
                 };
 
-                ListClasses.Add(psms);
-                ListClasses.Add(msgs);
-                ListClasses.Add(cpce1);
-                ListClasses.Add(ce1ce2);
-                ListClasses.Add(ce2);
-                ListClasses.Add(cm1);
-                ListClasses.Add(cm2);
-#endregion
+                ListClasses.Add(cl1);
+                ListClasses.Add(cl2);
+                ListClasses.Add(cl3);
+                ListClasses.Add(cl4);
+                ListClasses.Add(cl5);
+                ListClasses.Add(cl6);
+                ListClasses.Add(cl7);
+                ListClasses.Add(cl8);
+                #endregion
 
-#region Duree 
+                #region Duree 
                 DureeModel duree1 = new DureeModel() { Libelle = "30min", Minutes = 30, RowSpan = 2 };
                 DureeModel duree2 = new DureeModel() { Libelle = "45min", Minutes = 45, RowSpan = 3 };
                 DureeModel duree3 = new DureeModel() { Libelle = "1h", Minutes = 60, RowSpan = 4 };
