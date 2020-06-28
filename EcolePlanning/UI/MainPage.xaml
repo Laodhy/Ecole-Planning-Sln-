@@ -146,7 +146,7 @@
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
                 <TextBlock HorizontalAlignment="Right" x:Name="TitleNameCalendar" FontFamily="Tahoma"
-                           Text="" Grid.Row="1" FontSize="25" Margin="10,0,10,5"/>
+                           Text="Title" Grid.Row="1" FontSize="25" Margin="10,0,10,5"/>
             </Grid>
 
             <!-- Save Button -->
