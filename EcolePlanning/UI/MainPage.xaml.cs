@@ -441,6 +441,16 @@ namespace EcolePlanning.UI
                 FillVuesClasses();
         }
 
+        private void AddClasse_Click(object sender, RoutedEventArgs e)
+        {
+            AddClasse_Modal modal = new AddClasse_Modal();
+            modal.ShowDialog();
+
+            if (IsActivityVues)
+                FillVuesActivites();
+            else
+                FillVuesClasses();
+        }
         private void DeleteClasse_Click(object sender, RoutedEventArgs e)
         {
             DeleteClasse_Modal modal = new DeleteClasse_Modal();
@@ -451,6 +461,7 @@ namespace EcolePlanning.UI
             else
                 FillVuesClasses();
         }
+
         #endregion
 
         // *************************************************************************************

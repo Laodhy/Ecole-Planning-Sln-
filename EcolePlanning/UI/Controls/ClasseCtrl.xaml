@@ -85,7 +85,8 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel x:Name="stckSetInfos" Grid.Row="1" Visibility="Collapsed" Background="#55000000">
+        <StackPanel x:Name="stckSetInfos" Grid.Row="1" MouseDown="ClasseInfos_MouseDown" 
+                    Visibility="Collapsed" Background="#55000000">
             <ComboBox x:Name="ComboDays" Text="Choisir un jour" Margin="20,10,20,5"/>
 
             <ComboBox x:Name="ComboHours" Text="Choisir une heure" Margin="20,5" DisplayMemberPath="Libelle"/>

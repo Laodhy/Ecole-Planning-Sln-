@@ -54,6 +54,10 @@ namespace EcolePlanning.UI.Controls
                 stckSetInfos.Visibility = Visibility.Visible;
         }
 
+        private void ClasseInfos_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            HideInfos();
+        }
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
             if (ComboDays.SelectedItem == null || ComboHours.SelectedItem == null || ComboDuree.SelectedItem == null)

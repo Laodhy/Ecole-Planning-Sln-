@@ -1,0 +1,40 @@
+﻿<Window x:Class="EcolePlanning.UI.Modals.AddClasse_Modal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EcolePlanning.UI.Modals" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Nouvelle classe" Height="350" Width="500">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <GroupBox Header="Ajouter une classe" Padding="10" Margin="10">
+            <StackPanel>
+                <TextBlock Text="Libelle (*)" />
+                <TextBox x:Name="LblTxtBox" />
+                <TextBlock Text="Nom de l'enseignant" />
+                <TextBox x:Name="NomTxtBox" />
+                <TextBlock Text="Prénom de l'enseignant (*)" />
+                <TextBox x:Name="PrenomTxtBox" />
+                <TextBlock Text="Couleur (*)" />
+                <xctk:ColorPicker x:Name="CustomColorPicker"/>
+
+                <Button Margin="0,20" Click="AddClasse_Click">Ajouter classe</Button>
+            </StackPanel> 
+        </GroupBox>
+        
+    </Grid>
+</Window>

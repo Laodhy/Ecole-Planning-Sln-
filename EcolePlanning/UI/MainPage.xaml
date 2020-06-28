@@ -76,7 +76,7 @@
                         <MenuItem Header="_Supprimer..." Click="DeleteActivity_Click"/>
                     </MenuItem>
                     <MenuItem Header="_Classes">
-                        <MenuItem Header="_Ajouter..." />
+                        <MenuItem Header="_Ajouter..." Click="AddClasse_Click"/>
                         <MenuItem Header="_Supprimer..." Click="DeleteClasse_Click" />
                     </MenuItem>
                     <MenuItem Header="_Save" />
@@ -159,7 +159,7 @@
 
 
                 <!-- List class -->
-                <ScrollViewer Margin="0,10,5,20" VerticalScrollBarVisibility="Hidden">
+                <ScrollViewer Margin="0,10,5,20" VerticalScrollBarVisibility="Visible" Height="600">
                     <StackPanel x:Name="StckClassesLst">
                     </StackPanel>
                 </ScrollViewer>
