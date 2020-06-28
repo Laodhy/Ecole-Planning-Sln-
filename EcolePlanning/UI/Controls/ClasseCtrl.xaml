@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="EcolePlanning.UI.Controls.ClasseCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EcolePlanning.UI.Controls"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DesignHeight="200" d:DesignWidth="480">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="15" Background="{TemplateBinding Background}"
+                                Padding="20" HorizontalAlignment="Stretch">
+                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"  />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E59400" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="LightGray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Width="200">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="{Binding BackgroundColor}" MouseDown="Classe_MouseDown" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding Libelle}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center" Foreground="Black" Margin="2,5" FontWeight="Bold" />
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center" Foreground="Black" Margin="2,5" FontWeight="Bold" >
+                <Run Text="{Binding PrenomProfesseur}" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel x:Name="stckSetInfos" Grid.Row="1" Visibility="Collapsed" Background="#55000000">
+            <ComboBox x:Name="ComboDays" Text="Choisir un jour" Margin="20,10,20,5"/>
+
+            <ComboBox x:Name="ComboHours" Text="Choisir une heure" Margin="20,5" DisplayMemberPath="Libelle"/>
+
+            <TextBox x:Name="TxtBoxLibelle" Margin="20,5" Padding="5,0" Tag="Libellé à afficher" Style="{StaticResource placeHolder}"/>
+
+            <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="ComboDuree" Text="Choisir une durée" Margin="10,5,20,5" VerticalAlignment="Center" MinHeight="30"
+                          MinWidth="80" DisplayMemberPath="Libelle" VerticalContentAlignment="Center"/>
+                <Button Content="Valider" Click="Valider_Click" Margin="0,10,10,10" Padding="5,2" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

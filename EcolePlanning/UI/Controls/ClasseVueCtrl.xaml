@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="EcolePlanning.UI.Controls.ClasseVueCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EcolePlanning.UI.Controls"
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DesignHeight="200" d:DesignWidth="480">
+
+    <Border BorderThickness="3" BorderBrush="Transparent" x:Name="MainBorder" CornerRadius="15" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Padding="5" Background="{Binding BackgroundColor}" Click="Button_Click">
+                <Button.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Libelle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                   TextAlignment="Center" Foreground="Black" FontWeight="Bold" />
+
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="WrapWithOverflow"
+                   TextAlignment="Center" Foreground="Black" FontWeight="Bold" >
+                            <Run Text="{Binding NomProfesseur}" />
+                            <Run Text=" " />
+                            <Run Text="{Binding PrenomProfesseur}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Button.Content>
+            </Button>
+
+        </Grid>
+    </Border>
+</UserControl>

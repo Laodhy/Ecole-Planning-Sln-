@@ -1,0 +1,170 @@
+﻿<Page x:Class="EcolePlanning.UI.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:controls="clr-namespace:EcolePlanning.UI.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Loaded="Page_Loaded"
+      Title="">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#979797" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="15" Background="{TemplateBinding Background}"
+                                Padding="20" HorizontalAlignment="Stretch">
+                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"  />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E59400" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="HideBtnStyle">
+            <Setter Property="Background" Value="#979797" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}"
+                                Padding="5" HorizontalAlignment="Stretch">
+                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"  />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E59400" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- MENU -->
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Fichier">
+                    <MenuItem Header="_Intervants">
+                        <MenuItem Header="_Ajouter..." Click="AddActivity_Click" />
+                        <MenuItem Header="_Supprimer..." Click="DeleteActivity_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="_Classes">
+                        <MenuItem Header="_Ajouter..." />
+                        <MenuItem Header="_Supprimer..." Click="DeleteClasse_Click" />
+                    </MenuItem>
+                    <MenuItem Header="_Save" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        
+        <Grid Background="#CCCCCC" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+
+            <StackPanel Grid.Column="1" Margin="0,20" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="hideActivityBtn" Content="&lt;"  Style="{StaticResource HideBtnStyle}"
+                    Click="HideActivityBtn_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10,10,10,0">
+                </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="3" Margin="0,20" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button x:Name="hideClassBtn" Content="&gt;"  Style="{StaticResource HideBtnStyle}"
+                    Click="HideClassBtn_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10,10,10,0">
+                </Button>
+            </StackPanel>
+
+
+            <!-- Vues -->
+            <Grid Grid.Column="0" Grid.ColumnSpan="2"  Margin="10,0,0,20" x:Name="ActivityMenuStack">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Grid Margin="0,0,30,0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="intervenantsBtn" Content="Intervenants" Click="IntervenantsBtn_Click" Margin="10" />
+                    <Button Grid.Column="1" x:Name="classesBtn" Content="Classes" Click="ClassesBtn_Click" Margin="10" />
+
+                </Grid>
+
+                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Grid.Row="1">
+                    <StackPanel Orientation="Vertical" x:Name="StckVuesList">
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+
+            <!-- Calendrier -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <controls:CalendrierCtrl x:Name="CalendrierCtrl" Margin="5,20,5,0"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                <TextBlock HorizontalAlignment="Right" x:Name="TitleNameCalendar" FontFamily="Tahoma"
+                           Text="" Grid.Row="1" FontSize="25" Margin="10,0,10,5"/>
+            </Grid>
+
+            <!-- Save Button -->
+            <StackPanel x:Name="ClassesMenuStack" Grid.Column="3" Grid.ColumnSpan="2"
+                    Orientation="Vertical" Margin="5,0,0,0" >
+                <Button Content="Sauvegarder" Click="SaveButton_Click" Margin="0,10,0,10"
+                VerticalAlignment="Top" HorizontalAlignment="Center" Padding="10"/>
+                <Button Content="Enregistrer en PDF" Click="PdfButton_Click" Margin="0,0,20,0"
+                VerticalAlignment="Top" HorizontalAlignment="Center" Padding="10"/>
+
+
+                <!-- List class -->
+                <ScrollViewer Margin="0,10,5,20" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel x:Name="StckClassesLst">
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Page>
