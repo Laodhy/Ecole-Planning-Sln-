@@ -216,7 +216,7 @@ namespace EcolePlanning.UI
                 }
 
                 if (DataManager.Instance.ClasseChoosed != null && creneau.ListClass_Custom != null &&
-                    creneau.ListClass_Custom.Contains(DataManager.Instance.ClasseChoosed))
+                    creneau.ListClass_Custom.Where(x => x.Id == DataManager.Instance.ClasseChoosed.Id).Count() > 0)
                 {
                     CalendarCtrlClasse classe = CreateCalendarClasseCtrlByCreneau(creneau);
 
