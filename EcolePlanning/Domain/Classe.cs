@@ -62,6 +62,9 @@ namespace EcolePlanning.Domain
 
         public bool Equal(Classe e)
         {
+            if (e == null)
+                return false;
+
             if (this.Id == e.Id)
                 return true;
             else
