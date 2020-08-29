@@ -45,7 +45,7 @@ namespace EcolePlanning.Domain
             foreach (Creneau creneau in ListCreneauChoosed)
             {
                 //Si la même activite ou bien la même classe
-                if ( (creneau.Classe == null && cr.Classe == null) || 
+                if ( (creneau.Classe == null || cr.Classe == null) || 
                     creneau.Classe.Equal(cr.Classe) || creneau.Activite.Equal(cr.Activite))
                 {
                     //Si le même jour
