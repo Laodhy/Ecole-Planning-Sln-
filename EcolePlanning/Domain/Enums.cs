@@ -10,6 +10,6 @@ namespace EcolePlanning.Domain
     {
         public enum Days { Lundi, Mardi, Jeudi, Vendredi };
 
-        public enum ColumnSpanType { Full = -1 , Column1 = 0, Column2 = 1};
+        public enum ColumnSpanType { Full = -1 , Column1 = 0, Column2 = 1, Column3 = 2};
     }
 }

@@ -16,9 +16,9 @@ namespace EcolePlanning.Domain
             ListCreneauChoosed = new List<Creneau>();
         }
 
-        public bool AddCreneau(Creneau cr, out bool canBeSplit, out Creneau conflitCreneau)
+        public bool AddCreneau(Creneau cr, out int countConflictCreneau, out List<Creneau> conflitCreneau)
         {
-            if (!IsCreneauAlreadyTaken(cr,out canBeSplit, out conflitCreneau))
+            if (!IsCreneauAlreadyTaken(cr,out countConflictCreneau, out conflitCreneau))
             {
                 ListCreneauChoosed.Add(cr);
                 return true;
@@ -37,15 +37,16 @@ namespace EcolePlanning.Domain
             }
         } 
 
-        public bool IsCreneauAlreadyTaken(Creneau cr,out bool canBeSplit, out Creneau conflitCreneau)
+        public bool IsCreneauAlreadyTaken(Creneau cr,out int countConflictCreneau, out List<Creneau> conflitCreneau)
         {
+            countConflictCreneau = 0;
             bool alreadyTaken = false;
-            canBeSplit = false;
-            conflitCreneau = null;
+            conflitCreneau = new List<Creneau>();
             foreach (Creneau creneau in ListCreneauChoosed)
             {
                 //Si la même activite ou bien la même classe
-                if (creneau.Classe.Equal(cr.Classe) || creneau.Activite.Equal(cr.Activite))
+                if ( (creneau.Classe == null && cr.Classe == null) || 
+                    creneau.Classe.Equal(cr.Classe) || creneau.Activite.Equal(cr.Activite))
                 {
                     //Si le même jour
                     if (creneau.Jour == cr.Jour)
@@ -57,11 +58,12 @@ namespace EcolePlanning.Domain
                             || (cr.StartHour < creneau.StartHour && cr.EndHour >= creneau.EndHour) )
                         {
                             alreadyTaken = true;
-                            conflitCreneau = creneau;
-                            if (creneau.ConflitCreneauId == 0)
+                            conflitCreneau.Add(creneau);
+                            countConflictCreneau += 1;
+                            /*if (creneau.ConflitCreneauId == 0)
                             {
                                 canBeSplit = true;
-                            }
+                            }*/
                         }
                     }
                 }
@@ -102,9 +104,17 @@ namespace EcolePlanning.Domain
                 foreach (Creneau creneau in ListCreneauChoosed)
                 {
                     //Si la même classe
-                    if (creneau.Classe.Equal(classe))
+                    if (creneau.Classe != null && creneau.Classe.Equal(classe))
                     {
                         listToRemove.Add(creneau);
+                    }
+
+                    if (creneau.ListClass_Custom != null  && creneau.ListClass_Custom.Contains(classe))
+                    {
+                        creneau.ListClass_Custom.Remove(classe);
+
+                        if (creneau.ListClass_Custom.Count == 0)
+                            listToRemove.Add(creneau);
                     }
                 }
 

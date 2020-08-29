@@ -28,6 +28,12 @@ namespace EcolePlanning.UI.Modals
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBxClasses.ItemsSource = DataManager.Instance.ListClasses;
+
+            if (DataManager.Instance.ListClasses.Count > 0)
+            {
+                ComboBxClasses.SelectedIndex = 0;
+            }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -90,6 +90,9 @@
     <Compile Include="UI\Controls\CalendrierCtrl.xaml.cs">
       <DependentUpon>CalendrierCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\CustomCreneau_Ctrl.xaml.cs">
+      <DependentUpon>CustomCreneau_Ctrl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\ClasseCtrl.xaml.cs">
       <DependentUpon>ClasseCtrl.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
     <Page Include="UI\Controls\CalendrierCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Controls\CustomCreneau_Ctrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Controls\ClasseCtrl.xaml">
       <SubType>Designer</SubType>

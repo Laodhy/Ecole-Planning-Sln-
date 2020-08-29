@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EcolePlanning.UI.Modals" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
-        Title="Nouvelle classe" Height="350" Width="500">
+        mc:Ignorable="d" Loaded="Window_Loaded"
+        Title="Nouvelle classe" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="18" />
@@ -21,7 +21,19 @@
     </Window.Resources>
     
     <Grid>
-        <GroupBox Header="Ajouter une classe" Padding="10" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" x:Name="chooseClassGroup" Header="Choisir une classe" Padding="10" Margin="10,10,10,0">
+
+            <ComboBox x:Name="ComboBxClasses" Margin="40,0"
+                  DisplayMemberPath="Libelle"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="ComboBxClasses_SelectionChanged"/>
+        </GroupBox>
+        
+        <GroupBox Grid.Row="1" Header="Ajouter une classe" Padding="10" Margin="10">
             <StackPanel>
                 <TextBlock Text="Libelle (*)" />
                 <TextBox x:Name="LblTxtBox" />
@@ -32,7 +44,7 @@
                 <TextBlock Text="Couleur (*)" />
                 <xctk:ColorPicker x:Name="CustomColorPicker"/>
 
-                <Button Margin="0,20" Click="AddClasse_Click">Ajouter classe</Button>
+                <Button Margin="0,20" Click="AddClasse_Click" x:Name="BtnAddClasse">Ajouter classe</Button>
             </StackPanel> 
         </GroupBox>
         

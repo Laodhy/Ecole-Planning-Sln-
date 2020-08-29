@@ -87,7 +87,7 @@ namespace EcolePlanning.Domain
                 PngBitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(image));
 
-                using (Stream fileStream = new FileStream(folderImage + "Image.png", FileMode.OpenOrCreate, FileAccess.Write))
+                using (Stream fileStream = new FileStream(folderImage + "Image_" +DateTime.Now.ToString("yyyyMMddhhmmss") + ".png", FileMode.OpenOrCreate, FileAccess.Write))
                 {
                     encoder.Save(fileStream);
                 }
@@ -281,15 +281,15 @@ namespace EcolePlanning.Domain
                     Libelle = "PS/MS",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Axelle & Chantal",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ffe680")
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80ffbf")
                 };
                 Classe cl2 = new Classe()
                 {
                     Id = 2,
                     Libelle = "MS/GS",
                     NomProfesseur = " ",
-                    PrenomProfesseur = "Cassandra",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ff8080")
+                    PrenomProfesseur = "Cassandra & Sylvie",
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ffe680")
                 };
                 Classe cl3 = new Classe()
                 {
@@ -297,15 +297,15 @@ namespace EcolePlanning.Domain
                     Libelle = "GS/CP",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Virginie",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ff80b3")
-                };
-                Classe cl4 = new Classe()
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#EE607B")
+                }; 
+                 Classe cl4 = new Classe()
                 {
                     Id = 4,
                     Libelle = "CP/CE1",
                     NomProfesseur = " ",
-                    PrenomProfesseur = "Caroline",                    
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ED3B5D")
+                    PrenomProfesseur = "Caroline",
+                     BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#00cccc")
                 };
                 Classe cl5 = new Classe()
                 {
@@ -321,15 +321,15 @@ namespace EcolePlanning.Domain
                     Libelle = "CE2/CM1",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Laurence & Chantal",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80dfff")
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#d5ff80")
                 };
                 Classe cl7 = new Classe()
                 {
                     Id = 7,
-                    Libelle = "CM2",
+                    Libelle = "CM1/CM2",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Florent",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80ffbf")
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#ff8080")
                 };
                 Classe cl8 = new Classe()
                 {
@@ -337,7 +337,7 @@ namespace EcolePlanning.Domain
                     Libelle = "CM2",
                     NomProfesseur = " ",
                     PrenomProfesseur = "Sophie",
-                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#d5ff80")
+                    BackgroundColor = (SolidColorBrush)brushConverter.ConvertFrom("#80dfff")
                 };
 
                 ListClasses.Add(cl1);
@@ -369,8 +369,8 @@ namespace EcolePlanning.Domain
                 for (TimeSpan time = new TimeSpan(8, 30, 0); time <= timeEnd; time = time.Add(new TimeSpan(0, 15, 0)))
                 {
 
-                    //Pas les plages horaires entre midi et 14h
-                    if (time != new TimeSpan(12, 0, 0) && time != new TimeSpan(12, 15, 0) && time != new TimeSpan(12, 30, 0) &&
+                    //Pas les plages horaires entre 11h45 et 13h30
+                    if (time != new TimeSpan(11, 45, 0) && time != new TimeSpan(12, 0, 0) && time != new TimeSpan(12, 15, 0) && time != new TimeSpan(12, 30, 0) &&
                         time != new TimeSpan(12, 45, 0) && time != new TimeSpan(13, 0, 0) && time != new TimeSpan(13, 15, 0))
                     {
 

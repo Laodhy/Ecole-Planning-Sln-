@@ -7,18 +7,18 @@
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DesignHeight="200" d:DesignWidth="480">
 
-    <Border BorderThickness="3" BorderBrush="Transparent" x:Name="MainBorder">
+    <Border BorderThickness="3" BorderBrush="Transparent" x:Name="MainBorder" CornerRadius="15">
+        <Border.Background>
+            <ImageBrush ImageSource="{Binding BackgroundImage}" Stretch="UniformToFill" />
+        </Border.Background>
         <Grid x:Name="mainGrid" Height="70">
-            <Grid.Background>
-                <ImageBrush ImageSource="{Binding BackgroundImage}" Stretch="UniformToFill" />
-            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="False"
-                    Background="Black" Opacity="0.5" />
+            <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="False"
+                    Background="Black" Opacity="0.5" CornerRadius="15"/>
 
             <Button x:Name="MainButton" Grid.Row="0" Padding="5" Background="Transparent" Click="Button_Click">
                 <Button.Content>

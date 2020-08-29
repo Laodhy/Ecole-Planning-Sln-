@@ -17,6 +17,7 @@ namespace EcolePlanning.Domain
 
         public Activite Activite { get; set; }
         public Classe Classe { get; set; }
+        public List<Classe> ListClass_Custom { get; set; }
         public Days Jour { get; set; }
         public HourModel Hour { get; set; }
         public DureeModel Duree { get; set; }

@@ -23,6 +23,7 @@ namespace EcolePlanning.UI
     /// </summary>
     public partial class MainPage : Page
     {
+        const int MAXIMUM_CONFLIT_STACK = 2;
         private List<ClasseCtrl> _lstCalendarCtrl { get; set; }
         public bool IsActivityVues { get; set; }
 
@@ -87,47 +88,44 @@ namespace EcolePlanning.UI
                 case "11H30":
                     row = 13;
                     break;
-                case "11H45":
+                case "13H30":
                     row = 14;
                     break;
-                case "13H30":
-                    row = 16;
-                    break;
                 case "13H45":
-                    row = 17;
+                    row = 15;
                     break;
                 case "14H00":
-                    row = 18;
+                    row = 16;
                     break;
                 case "14H15":
-                    row = 19;
+                    row = 17;
                     break;
                 case "14H30":
-                    row = 20;
+                    row = 18;
                     break;
                 case "14H45":
-                    row = 21;
+                    row = 19;
                     break;
                 case "15H00":
-                    row = 22;
+                    row = 20;
                     break;
                 case "15H15":
-                    row = 23;
+                    row = 21;
                     break;
                 case "15H30":
-                    row = 24;
+                    row = 22;
                     break;
                 case "15H45":
-                    row = 25;
+                    row = 23;
                     break;
                 case "16H00":
-                    row = 26;
+                    row = 24;
                     break;
                 case "16H15":
-                    row = 27;
+                    row = 25;
                     break;
                 case "16H30":
-                    row = 28;
+                    row = 26;
                     break;
 
             }
@@ -144,7 +142,7 @@ namespace EcolePlanning.UI
                 ActivityVueCtrl control = new ActivityVueCtrl
                 {
                     CurrentActivite = ac,
-                    Margin = new Thickness(20, 10, 20, 10)
+                    Margin = new Thickness(20, 5, 20, 5)
                 };
                 control.ActiviteChoosed += ActivityVueCtrl_ActiviteChoosed;
                 StckVuesList.Children.Add(control);
@@ -176,7 +174,7 @@ namespace EcolePlanning.UI
                 ClasseVueCtrl control = new ClasseVueCtrl
                 {
                     CurrentClasse = cl,
-                    Margin = new Thickness(20, 8, 20, 8)
+                    Margin = new Thickness(20, 5, 20, 5)
                 };
                 control.ClasseChoosed += ClasseVueCtrl_ActiviteChoosed;
                 StckVuesList.Children.Add(control);
@@ -209,8 +207,16 @@ namespace EcolePlanning.UI
                     CalendrierCtrl.AddCtrlClass(classe);
                 }
 
-                if (DataManager.Instance.ClasseChoosed != null &&
+                if (DataManager.Instance.ClasseChoosed != null && creneau.Classe != null &&
                     creneau.Classe.Equal(DataManager.Instance.ClasseChoosed))
+                {
+                    CalendarCtrlClasse classe = CreateCalendarClasseCtrlByCreneau(creneau);
+
+                    CalendrierCtrl.AddCtrlClass(classe);
+                }
+
+                if (DataManager.Instance.ClasseChoosed != null && creneau.ListClass_Custom != null &&
+                    creneau.ListClass_Custom.Contains(DataManager.Instance.ClasseChoosed))
                 {
                     CalendarCtrlClasse classe = CreateCalendarClasseCtrlByCreneau(creneau);
 
@@ -224,6 +230,7 @@ namespace EcolePlanning.UI
         {
             CalendarCtrlClasse classe = new CalendarCtrlClasse();
             classe.CurrentClasse = creneau.Classe;
+            classe.ListClass_Custom = creneau.ListClass_Custom;
             classe.CurrentCreneau = creneau;
             classe.RemoveCreneauEvent += CalendarCtrlClasse_RemoveCreneauEvent;
 
@@ -234,18 +241,19 @@ namespace EcolePlanning.UI
                     jourChoosed = 1;
                     break;
                 case Enums.Days.Mardi:
-                    jourChoosed = 3;
+                    jourChoosed = 4;
                     break;
                 case Enums.Days.Jeudi:
-                    jourChoosed = 5;
+                    jourChoosed = 7;
                     break;
                 case Enums.Days.Vendredi:
-                    jourChoosed = 7;
+                    jourChoosed = 10;
                     break;
             }
 
             Grid.SetRow(classe, GetRowFromHour(creneau.Hour.Libelle));
             Grid.SetRowSpan(classe, creneau.Duree.RowSpan);
+
             if (creneau.Column != Enums.ColumnSpanType.Full)
             {
                 Grid.SetColumnSpan(classe, 1);
@@ -253,7 +261,7 @@ namespace EcolePlanning.UI
             }
             else
             {
-                Grid.SetColumnSpan(classe, 2);
+                Grid.SetColumnSpan(classe, 3);
                 Grid.SetColumn(classe, jourChoosed);
             }
 
@@ -299,16 +307,21 @@ namespace EcolePlanning.UI
         {
             CalendarCtrlClasse classe = CreateCalendarClasseCtrlByCreneau(e);
 
-            bool IsAdded = CalendarManager.Instance.AddCreneau(e, out bool canBeSplit, out Creneau conflitCreneau);
+            bool IsAdded = CalendarManager.Instance.AddCreneau(e, out int countConflictCreneau, out List<Creneau> conflitCreneaux);
             if (IsAdded)
                 CalendrierCtrl.AddCtrlClass(classe);
-            else if (!IsAdded && canBeSplit)
+            else if (!IsAdded && countConflictCreneau < MAXIMUM_CONFLIT_STACK)
             {
+                string message = "Ce créneau est déjà pris !";
+                foreach (Creneau c in conflitCreneaux)
+                {
+                    message += " \n\n" +
+                        (c.Classe != null ? c.Classe.Libelle : "") + " | " + c.Activite.Libelle + "\n" +
+                        c.StartHour.ToString("hh\\:mm") + " à " + c.EndHour.ToString("hh\\:mm");
 
-                string message = "Ce créneau est déjà pris ! \n\n" +
-                    conflitCreneau.Classe.Libelle + " | " + conflitCreneau.Activite.Libelle + "\n" +
-                    conflitCreneau.StartHour.ToString("hh\\:mm") + " à " + conflitCreneau.EndHour.ToString("hh\\:mm") +
-                    "\n\n Voulez-vous le partagez ?";
+                }
+                message += "\n\n Voulez-vous le partagez ?";
+
                 if (MessageBox.Show(message, "Attention", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                 {
                     //No
@@ -319,21 +332,31 @@ namespace EcolePlanning.UI
                     CalendarManager.Instance.ListCreneauChoosed.Add(e);
 
                     //On sépare les creneaux
-                    conflitCreneau.Column = Enums.ColumnSpanType.Column1;
-                    conflitCreneau.ConflitCreneauId = e.ID;
+                    int nbConflit = 0;
+                    for (int index = 0; index < conflitCreneaux.Count; index++)
+                    {
+                        conflitCreneaux[index].Column = (Enums.ColumnSpanType)index;
+                        conflitCreneaux[index].ConflitCreneauId = e.ID;
+                        nbConflit++;
+                    }
 
-                    e.ConflitCreneauId = conflitCreneau.ID;
-                    e.Column = Enums.ColumnSpanType.Column2;
+                    e.ConflitCreneauId = conflitCreneaux.First().ID;
+                    e.Column = (Enums.ColumnSpanType)nbConflit;
+
                     FillCalendar();
                 }
 
             }
             else
             {
-                string message2 = "Ce créneau est déjà pris ! \n\n" +
-                    conflitCreneau.Classe.Libelle + " | " + conflitCreneau.Activite.Libelle + "\n" +
-                    conflitCreneau.StartHour.ToString("hh\\:mm") + " à " + conflitCreneau.EndHour.ToString("hh\\:mm");
+                string message2 = "Ce créneau est déjà pris !";
+                foreach (Creneau c in conflitCreneaux)
+                {
+                    message2 += " \n\n" +
+                        (c.Classe != null ? c.Classe.Libelle : "") + " | " + c.Activite.Libelle + "\n" +
+                        c.StartHour.ToString("hh\\:mm") + " à " + c.EndHour.ToString("hh\\:mm");
 
+                }
                 MessageBox.Show(message2);
             }
         }
@@ -356,7 +379,7 @@ namespace EcolePlanning.UI
             catch (Exception ex)
             {
                 MessageBox.Show("Problème lors de la suppression du créneau " +
-                    e.Classe.Libelle + "-" + e.Activite.Libelle + " : \n\n" + ex.Message);
+                    (e.Classe != null ? e.Classe.Libelle : "") + "-" + e.Activite.Libelle + " : \n\n" + ex.Message);
             }
             finally
             {
@@ -371,6 +394,14 @@ namespace EcolePlanning.UI
                 ctrl.HideInfos();
             }
             CalendarManager.Instance.SelectedClass = e;
+        }
+
+        private void CustomCreneauCtrl_Clicked(object sender, EventArgs e)
+        {
+            foreach (ClasseCtrl ctrl in _lstCalendarCtrl)
+            {
+                ctrl.HideInfos();
+            }
         }
 
         private void UpdateNameCalendar()
@@ -422,6 +453,8 @@ namespace EcolePlanning.UI
         private void AddActivity_Click(object sender, RoutedEventArgs e)
         {
             AddIntervenant_Modal modal = new AddIntervenant_Modal();
+            modal.Owner = Application.Current.MainWindow; // We must also set the owner for this to work.
+            modal.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             modal.ShowDialog();
 
             if (IsActivityVues)
@@ -433,6 +466,8 @@ namespace EcolePlanning.UI
         private void DeleteActivity_Click(object sender, RoutedEventArgs e)
         {
             DeleteActivity_Modal modal = new DeleteActivity_Modal();
+            modal.Owner = Application.Current.MainWindow; // We must also set the owner for this to work.
+            modal.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             modal.ShowDialog();
 
             if (IsActivityVues)
@@ -444,6 +479,8 @@ namespace EcolePlanning.UI
         private void AddClasse_Click(object sender, RoutedEventArgs e)
         {
             AddClasse_Modal modal = new AddClasse_Modal();
+            modal.Owner = Application.Current.MainWindow; // We must also set the owner for this to work.
+            modal.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             modal.ShowDialog();
 
             if (IsActivityVues)
@@ -451,9 +488,26 @@ namespace EcolePlanning.UI
             else
                 FillVuesClasses();
         }
+        private void ModifyClasse_Click(object sender, RoutedEventArgs e)
+        {
+            AddClasse_Modal modal = new AddClasse_Modal();
+            modal.Owner = Application.Current.MainWindow; // We must also set the owner for this to work.
+            modal.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            modal.IsModification = true;
+            modal.ShowDialog();
+
+            if (IsActivityVues)
+                FillVuesActivites();
+            else
+                FillVuesClasses();
+        }
+
+
         private void DeleteClasse_Click(object sender, RoutedEventArgs e)
         {
             DeleteClasse_Modal modal = new DeleteClasse_Modal();
+            modal.Owner = Application.Current.MainWindow; // We must also set the owner for this to work.
+            modal.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             modal.ShowDialog();
 
             if (IsActivityVues)

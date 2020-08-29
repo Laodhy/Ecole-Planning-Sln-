@@ -22,6 +22,9 @@ namespace EcolePlanning.UI.Controls
     public partial class CalendarCtrlClasse : UserControl
     {
         public Classe CurrentClasse { get; set; }
+
+        public List<Classe> ListClass_Custom { get; set; }
+
         public Creneau CurrentCreneau { get; set; }
 
         public CalendarCtrlClasse()
@@ -31,7 +34,9 @@ namespace EcolePlanning.UI.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DataContext = CurrentClasse;
+            if (CurrentClasse != null) 
+                this.DataContext = CurrentClasse;
+
             backgroundImg.ImageSource = CurrentCreneau.Activite.BackgroundImage;
             activiteName.Text = CurrentCreneau.Activite.Libelle;
             LibelleCreneau.Text = CurrentCreneau.LibelleAffiche;
