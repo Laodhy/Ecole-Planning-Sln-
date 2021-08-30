@@ -27,7 +27,7 @@ namespace EcolePlanning.Domain
 
         public Creneau()
         {
-            lock (Lock)
+           /* lock (Lock)
             {
                 int nextIndex = GetAvailableIndex();
                 if (nextIndex == -1)
@@ -37,6 +37,24 @@ namespace EcolePlanning.Domain
                 }
 
                 ID = nextIndex;
+            }*/
+        }
+
+        public Creneau(bool createID = false) : base()
+        {
+            if (createID)
+            {
+                lock (Lock)
+                {
+                    int nextIndex = GetAvailableIndex();
+                    if (nextIndex == -1)
+                    {
+                        nextIndex = UsedCounter.Count;
+                        UsedCounter.Add(true);
+                    }
+
+                    ID = nextIndex;
+                }
             }
         }
 

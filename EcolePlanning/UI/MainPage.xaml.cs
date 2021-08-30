@@ -89,43 +89,43 @@ namespace EcolePlanning.UI
                     row = 13;
                     break;
                 case "13H30":
-                    row = 14;
-                    break;
-                case "13H45":
                     row = 15;
                     break;
-                case "14H00":
+                case "13H45":
                     row = 16;
                     break;
-                case "14H15":
+                case "14H00":
                     row = 17;
                     break;
-                case "14H30":
+                case "14H15":
                     row = 18;
                     break;
-                case "14H45":
+                case "14H30":
                     row = 19;
                     break;
-                case "15H00":
+                case "14H45":
                     row = 20;
                     break;
-                case "15H15":
+                case "15H00":
                     row = 21;
                     break;
-                case "15H30":
+                case "15H15":
                     row = 22;
                     break;
-                case "15H45":
+                case "15H30":
                     row = 23;
                     break;
-                case "16H00":
+                case "15H45":
                     row = 24;
                     break;
-                case "16H15":
+                case "16H00":
                     row = 25;
                     break;
-                case "16H30":
+                case "16H15":
                     row = 26;
+                    break;
+                case "16H30":
+                    row = 27;
                     break;
 
             }
@@ -344,6 +344,17 @@ namespace EcolePlanning.UI
                     e.Column = (Enums.ColumnSpanType)nbConflit;
 
                     FillCalendar();
+                    
+
+                    //On sépare les creneaux
+                    /*if (conflitCreneaux.Count > 0)
+                    {
+                        conflitCreneaux[0].Column = Enums.ColumnSpanType.Column1;
+                        conflitCreneaux[0].ConflitCreneauId = e.ID;
+                    }
+                    e.ConflitCreneauId = conflitCreneaux[0].ID;
+                    e.Column = Enums.ColumnSpanType.Column2;
+                    FillCalendar();*/
                 }
 
             }

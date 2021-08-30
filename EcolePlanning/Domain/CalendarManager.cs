@@ -1,4 +1,5 @@
 ﻿using EcolePlanning.Tools;
+using EcolePlanning.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,14 @@ namespace EcolePlanning.Domain
         public List<Creneau> ListCreneauChoosed { get; set; }
         public Classe SelectedClass { get; set; }
 
-        public CalendarManager() {
+        public CalendarManager()
+        {
             ListCreneauChoosed = new List<Creneau>();
         }
 
         public bool AddCreneau(Creneau cr, out int countConflictCreneau, out List<Creneau> conflitCreneau)
         {
-            if (!IsCreneauAlreadyTaken(cr,out countConflictCreneau, out conflitCreneau))
+            if (!IsCreneauAlreadyTaken(cr, out countConflictCreneau, out conflitCreneau))
             {
                 ListCreneauChoosed.Add(cr);
                 return true;
@@ -35,9 +37,9 @@ namespace EcolePlanning.Domain
             {
                 ListCreneauChoosed.Remove(cr);
             }
-        } 
+        }
 
-        public bool IsCreneauAlreadyTaken(Creneau cr,out int countConflictCreneau, out List<Creneau> conflitCreneau)
+        public bool IsCreneauAlreadyTaken(Creneau cr, out int countConflictCreneau, out List<Creneau> conflitCreneau)
         {
             countConflictCreneau = 0;
             bool alreadyTaken = false;
@@ -45,17 +47,24 @@ namespace EcolePlanning.Domain
             foreach (Creneau creneau in ListCreneauChoosed)
             {
                 //Si la même activite ou bien la même classe
-                if ( (creneau.Classe == null || cr.Classe == null) || 
-                    creneau.Classe.Equal(cr.Classe) || creneau.Activite.Equal(cr.Activite))
+                //if ( (creneau.Classe == null || cr.Classe == null) || 
+                //    creneau.Classe.Equal(cr.Classe) || creneau.Activite.Equal(cr.Activite))
+
+                if ((creneau.Classe != null && cr.Classe != null && (creneau.Classe.Equal(cr.Classe) || creneau.Activite.Equal(cr.Activite)))
+                    ||
+                    (creneau.Classe != null && cr.Classe == null && (cr.ListClass_Custom.Where(x => x.Id == creneau.Classe.Id).Count() > 0))
+                    ||
+                    (creneau.Classe == null && cr.Classe == null && (cr.ListClass_Custom.Any(x => creneau.ListClass_Custom.Any(y => y.Id == x.Id))))
+                   )
                 {
                     //Si le même jour
                     if (creneau.Jour == cr.Jour)
 
                     {
                         //Si empiète sur l'heure d'un autre creneau
-                        if ( (cr.StartHour >= creneau.StartHour && cr.StartHour < creneau.EndHour) 
-                            || (cr.EndHour > creneau.StartHour && cr.EndHour < creneau.EndHour)                            
-                            || (cr.StartHour < creneau.StartHour && cr.EndHour >= creneau.EndHour) )
+                        if ((cr.StartHour >= creneau.StartHour && cr.StartHour < creneau.EndHour)
+                            || (cr.EndHour > creneau.StartHour && cr.EndHour < creneau.EndHour)
+                            || (cr.StartHour < creneau.StartHour && cr.EndHour >= creneau.EndHour))
                         {
                             alreadyTaken = true;
                             conflitCreneau.Add(creneau);
@@ -109,7 +118,7 @@ namespace EcolePlanning.Domain
                         listToRemove.Add(creneau);
                     }
 
-                    if (creneau.ListClass_Custom != null  && creneau.ListClass_Custom.Contains(classe))
+                    if (creneau.ListClass_Custom != null && creneau.ListClass_Custom.Contains(classe))
                     {
                         creneau.ListClass_Custom.Remove(classe);
 

@@ -68,12 +68,12 @@ namespace EcolePlanning.Domain
 
         public void Init()
         {
-#if DEBUG
+/*#if DEBUG
             CreateData();
 
-#else
+#else*/
             ReadData();
-#endif
+//#endif
         }
 
         public void PrintPdf(UI.Controls.CalendrierCtrl Calendrier)

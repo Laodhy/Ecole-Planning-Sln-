@@ -69,7 +69,7 @@ namespace EcolePlanning.UI.Controls
             DureeModel duree = ComboDuree.SelectedItem as DureeModel;
             string libelleAffiche = TxtBoxLibelle.Text;
 
-            Creneau creneauChoosed = new Creneau()
+            Creneau creneauChoosed = new Creneau(true)
             {
                 Activite = DataManager.Instance.ActiviteChoosed,
                 Classe = CurrentClasse,

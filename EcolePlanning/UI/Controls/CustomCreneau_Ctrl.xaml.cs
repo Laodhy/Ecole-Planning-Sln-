@@ -77,7 +77,7 @@ namespace EcolePlanning.UI.Controls
             List<Classe> lstClasse = new List<Classe>();
             lstClasse.AddRange(LstClasses.SelectedItems.Cast<Classe>());
 
-            Creneau creneauChoosed = new Creneau()
+            Creneau creneauChoosed = new Creneau(true)
             {
                 Activite = DataManager.Instance.ActiviteChoosed,
                 //Classe = CurrentClasse,
